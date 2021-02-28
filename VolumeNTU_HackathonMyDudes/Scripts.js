@@ -1,3 +1,5 @@
+//Special thanks to the Google Developer Website: https://developers.google.com/calendar/quickstart/js
+
 var CLIENT_ID = '1077482939024-sj84oq0b81rdguugrt4qjjarojmhd2o8.apps.googleusercontent.com';
 var API_KEY = 'AIzaSyAJY9MiHPGGWdAhNpDNtlU3v6NNdZxzvp4';
 
