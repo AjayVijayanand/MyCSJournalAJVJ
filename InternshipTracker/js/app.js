@@ -135,7 +135,16 @@ function renderList() {
     const apps = visibleApps();
     els.resultCount.textContent =
         apps.length === state.apps.length ? plural(apps.length, "application") : `${apps.length} of ${state.apps.length} shown`;
-        
+
+    if (state.apps.length === 0) {
+        els.list.replaceChildren(
+            el("li", { class: "empty" }, [
+                el("p", { text: "Nothing tracked yet. Add your first application with the form." }),
+            ])
+        );
+        return;
+    }
+    
     if (apps.length === 0) {
         els.list.replaceChildren(
             el("li", { class: "empty" }, [
