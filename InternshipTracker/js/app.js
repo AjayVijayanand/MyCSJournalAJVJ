@@ -144,7 +144,7 @@ function renderList() {
         );
         return;
     }
-    
+
     if (apps.length === 0) {
         els.list.replaceChildren(
             el("li", { class: "empty" }, [
@@ -205,9 +205,24 @@ function renderRow(app) {
 }
 
 // ---------- Actions ----------
+// Same company and role = same application (ignores capitals and extra spaces)
+function findDuplicate(data) {
+    const norm = (s) => s.trim().toLowerCase();
+    return state.apps.find(
+        (a) => norm(a.company) === norm(data.company) && norm(a.role) === norm(data.role)
+    );
+}
+
 async function addApp(data) {
     const created = await state.store.create(data);
     state.apps.push(created);
+    render();
+}
+
+async function updateApp(id, changes) {
+    const updated = await state.store.update(id, changes);
+    const index = state.apps.findIndex((a) => a.id === id);
+    state.apps[index] = { ...state.apps[index], ...updated };
     render();
 }
 
@@ -292,7 +307,18 @@ els.form.addEventListener("submit", async (e) => {
     els.addButton.disabled = true;
     els.addButton.textContent = "Adding…";
     try {
-        await addApp(data);
+        const existing = findDuplicate(data);
+        if (existing) {
+            // Already tracked: update status, date and link instead of adding a copy
+            await updateApp(existing.id, {
+                status: data.status,
+                dateApplied: data.dateApplied,
+                link: data.link || existing.link,
+            });
+            flash(`${existing.company} – ${existing.role} was already tracked, so it was updated.`);
+        } else {
+            await addApp(data);
+        }
         els.form.reset();
         els.form.elements.dateApplied.value = todayISO();
         els.form.elements.company.focus();

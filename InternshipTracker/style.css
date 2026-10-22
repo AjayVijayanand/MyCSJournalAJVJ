@@ -279,7 +279,7 @@ input[aria-invalid="true"] {
     min-height: 0;
     margin: 0 0 0.5rem;
     font-size: 0.9rem;
-    color: var(--rejected);
+    color: var(--muted);
 }
 
 button {
