@@ -1,7 +1,3 @@
-// The UI. One array (state.apps) is the single source of truth.
-// Every action follows the same pattern: ask the store to change the data,
-// update state.apps, then call render() to redraw the page from it.
-
 const STAGES = ["Applied", "Interview", "Offer", "Rejected"];
 
 const state = {
@@ -27,8 +23,6 @@ const els = {
     resultCount: $("result-count"),
 };
 
-// Small helper to build elements safely. Text always goes in with textContent,
-// never innerHTML, so typing <script> as a company name shows it as plain text (no XSS).
 function el(tag, props = {}, children = []) {
     const node = document.createElement(tag);
     for (const [key, value] of Object.entries(props)) {
@@ -141,16 +135,7 @@ function renderList() {
     const apps = visibleApps();
     els.resultCount.textContent =
         apps.length === state.apps.length ? plural(apps.length, "application") : `${apps.length} of ${state.apps.length} shown`;
-
-    if (state.apps.length === 0) {
-        els.list.replaceChildren(
-            el("li", { class: "empty" }, [
-                el("p", { text: "Nothing tracked yet. Add an application with the form, or load a few examples to try the tracker." }),
-                el("button", { type: "button", class: "secondary", text: "Load example applications", onclick: loadExamples }),
-            ])
-        );
-        return;
-    }
+        
     if (apps.length === 0) {
         els.list.replaceChildren(
             el("li", { class: "empty" }, [
@@ -251,22 +236,6 @@ function clearFilters() {
     state.filter.query = "";
     els.search.value = "";
     setStatusFilter("All");
-}
-
-async function loadExamples() {
-    const examples = [
-        { company: "Northwind Labs", role: "Software Engineering Intern", status: "Interview", dateApplied: "2026-10-02" },
-        { company: "Aster Semiconductor", role: "Test Automation Intern", status: "Applied", dateApplied: "2026-10-05" },
-        { company: "Kestrel Systems", role: "Embedded Software Intern", status: "Rejected", dateApplied: "2026-09-28" },
-        { company: "Blue Harbour Analytics", role: "Data Engineering Intern", status: "Offer", dateApplied: "2026-09-20" },
-        { company: "Orbit Devices", role: "Full Stack Developer Intern", status: "Applied", dateApplied: "2026-10-11" },
-    ];
-    try {
-        for (const example of examples) state.apps.push(await state.store.create(example));
-        render();
-    } catch (err) {
-        flash(`Could not add examples: ${err.message}`);
-    }
 }
 
 function flash(message) {
