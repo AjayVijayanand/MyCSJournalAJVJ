@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Tracker</title>
+    <meta name="description" content="Track every internship application, interview and offer in one place.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="wrap topbar-inner">
+            <span class="brand">Internship Tracker</span>
+            <span class="connection" id="connection" role="status">Connecting…</span>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <!-- 1. Pipeline: one sentence and one bar that summarise everything -->
+        <section class="pipeline" aria-labelledby="summary">
+            <h1 id="summary" class="summary-line">Loading your applications…</h1>
+            <div class="pipeline-bar" id="pipeline-bar" aria-label="Applications by status. Select a stage to filter the list."></div>
+            <ul class="pipeline-legend" id="pipeline-legend"></ul>
+        </section>
+
+        <div class="layout">
+            <!-- 2. Add form -->
+            <section class="panel add-panel" aria-labelledby="add-heading">
+                <h2 id="add-heading">Add an application</h2>
+                <form id="app-form" novalidate>
+                    <div class="field">
+                        <label for="company">Company</label>
+                        <input id="company" name="company" autocomplete="organization" maxlength="100">
+                        <p class="error" id="company-error"></p>
+                    </div>
+                    <div class="field">
+                        <label for="role">Role</label>
+                        <input id="role" name="role" maxlength="150">
+                        <p class="error" id="role-error"></p>
+                    </div>
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="status">Status</label>
+                            <select id="status" name="status">
+                                <option>Applied</option>
+                                <option>Interview</option>
+                                <option>Offer</option>
+                                <option>Rejected</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="dateApplied">Date applied</label>
+                            <input id="dateApplied" name="dateApplied" type="date">
+                            <p class="error" id="dateApplied-error"></p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="link">Listing link <span class="optional">optional</span></label>
+                        <input id="link" name="link" type="url" placeholder="https://" maxlength="300">
+                        <p class="error" id="link-error"></p>
+                    </div>
+                    <p class="form-message" id="form-message" role="alert"></p>
+                    <button type="submit" class="primary" id="add-button">Add application</button>
+                </form>
+            </section>
+
+            <!-- 3. Filters and 4. the list -->
+            <section class="list-panel" aria-labelledby="list-heading">
+                <div class="list-head">
+                    <h2 id="list-heading">Applications</h2>
+                    <p class="result-count" id="result-count"></p>
+                </div>
+                <div class="filters">
+                    <label class="visually-hidden" for="search">Search</label>
+                    <input id="search" type="search" placeholder="Search company or role">
+                    <label class="visually-hidden" for="status-filter">Filter by status</label>
+                    <select id="status-filter">
+                        <option value="All">All stages</option>
+                        <option>Applied</option>
+                        <option>Interview</option>
+                        <option>Offer</option>
+                        <option>Rejected</option>
+                    </select>
+                    <label class="visually-hidden" for="sort">Sort</label>
+                    <select id="sort">
+                        <option value="newest">Newest first</option>
+                        <option value="oldest">Oldest first</option>
+                        <option value="company">Company A–Z</option>
+                    </select>
+                </div>
+                <ul class="app-list" id="app-list"></ul>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
