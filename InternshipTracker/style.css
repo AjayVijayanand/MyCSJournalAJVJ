@@ -3,17 +3,17 @@
    A stage colour only ever means that stage, everywhere it appears. */
 
 :root {
-    --page: #eef1f5;
+    --page: #d5d6d8;
     --panel: #ffffff;
-    --ink: #16203a;
-    --muted: #5d687e;
+    --ink: #0c1221;
+    --muted: #656c79;
     --rule: #d8dee8;
-    --focus: #16203a;
+    --focus: #101627;
 
-    --applied: #4466f2;
+    --applied: #1a3dca;
     --interview: #d98a17;
-    --offer: #1f8c63;
-    --rejected: #b4506a;
+    --offer: #1fc083;
+    --rejected: #be234d;
 
     --heading: "Bricolage Grotesque", "Segoe UI", sans-serif;
     --body: "Figtree", "Segoe UI", sans-serif;
